@@ -3,29 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website Title</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
+    <title>Unique Codes Generator</title>
+    <script>
+        // List of 500 codes
+        const allCodes = [
+            // Add your 500 codes here
+            // Example: "CODE001", "CODE002", ..., "CODE500"
+        ];
+
+        // Function to generate and display 10 unique codes for a user
+        function generateUniqueCodes() {
+            // Shuffle the array of all codes
+            const shuffledCodes = allCodes.sort(() => Math.random() - 0.5);
+
+            // Select the first 10 codes (unique to the user)
+            const userCodes = shuffledCodes.slice(0, 10);
+
+            // Display the codes on the webpage
+            const codesContainer = document.getElementById('codes-container');
+            codesContainer.innerHTML = "<h2>Your Unique Codes:</h2><ul>";
+
+            userCodes.forEach(code => {
+                codesContainer.innerHTML += `<li>${code}</li>`;
+            });
+
+            codesContainer.innerHTML += "</ul>";
         }
-        #jotform-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
+    </script>
 </head>
 <body>
-    <!-- Replace with your JotForm iframe code -->
-    <iframe
-        id="jotform-iframe"
-        allowtransparency="true"
-        src="https://form.jotform.com/233112557938561"
-        frameborder="0"
-        scrolling="yes">
-    </iframe>
+    <h1>Welcome to the Unique Codes Generator</h1>
+    <button onclick="generateUniqueCodes()">Generate Codes</button>
+    <div id="codes-container"></div>
 </body>
 </html>
