@@ -1,36 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unique Codes Generator</title>
-    <script>
-        // List of 500 codes
-        const allCodes = [      CODE001, CODE002, CODE500];
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beautiful Image Generator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
 
-        // Function to generate and display 10 unique codes for a user
-        function generateUniqueCodes() {
-            // Shuffle the array of all codes
-            const shuffledCodes = allCodes.sort(() => Math.random() - 0.5);
+    #container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-            // Select the first 10 codes (unique to the user)
-            const userCodes = shuffledCodes.slice(0, 10);
+    #output {
+      margin-top: 20px;
+    }
 
-            // Display the codes on the webpage
-            const codesContainer = document.getElementById('codes-container');
-            codesContainer.innerHTML = "<h2>Your Unique Codes:</h2><ul>";
-
-            userCodes.forEach(code => {
-                codesContainer.innerHTML += `<li>${code}</li>`;
-            });
-
-            codesContainer.innerHTML += "</ul>";
-        }
-    </script>
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to the Unique Codes Generator</h1>
-    <button onclick="generateUniqueCodes()">Generate Codes</button>
-    <div id="codes-container"></div>
+  <div id="container">
+    <h1>Beautiful Image Generator</h1>
+    <label for="userName">Enter Your Name:</label>
+    <input type="text" id="userName" placeholder="Your Name">
+    <button onclick="generateImage()">Generate Image</button>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    function generateImage() {
+      const userName = document.getElementById('userName').value;
+
+      // Mockup image URL (replace with actual image generation logic)
+      const imageUrl = `https://placekitten.com/600/400?text=${userName}`;
+
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = `
+        <p>Here's your beautiful image, ${userName}:</p>
+        <img src="${imageUrl}" alt="Beautiful Image">
+        <p>Right-click the image and select "Save image as..." to download it.</p>
+      `;
+    }
+  </script>
 </body>
 </html>
