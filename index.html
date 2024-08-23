@@ -30,22 +30,17 @@
             return urlParams.get(param);
         }
 
-        // Hide specific element in Calendly iframe using MutationObserver
-        function hideCalendlyElement(iframe) {
-            var hiddenClass = 'Ca8ZXPhzUYH7_QjqmRim ZailmwkOvrZPJqhYNv2b';
-            var observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    var elementToHide = iframe.contentWindow.document.querySelector(`.${hiddenClass}`);
-                    if (elementToHide) {
-                        elementToHide.style.display = 'none';
-                    }
-                });
-            });
-
-            observer.observe(iframe.contentWindow.document, {
-                childList: true,
-                subtree: true
-            });
+        // Hide specific fields in Calendly iframe using CSS injection
+        function hideCalendlyFields(iframe) {
+            var css = `
+                .Ca8ZXPhzUYH7_QjqmRim.ZailmwkOvrZPJqhYNv2b {
+                    display: none !important;
+                }
+            `;
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.appendChild(document.createTextNode(css));
+            iframe.contentWindow.document.head.appendChild(style);
         }
 
         // Autofill name, email, a1, and a2 in Calendly
@@ -78,9 +73,10 @@
                 utm: {}
             });
 
+            // Hide the a1 and a2 fields after the iframe is loaded
             var iframe = document.querySelector('.calendly-inline-widget iframe');
             iframe.onload = function() {
-                hideCalendlyElement(iframe);
+                hideCalendlyFields(iframe);
             };
         });
     </script>
