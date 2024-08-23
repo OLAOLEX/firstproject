@@ -1,19 +1,42 @@
-<div class="calendly-inline-widget" data-url="https://calendly.com/your-link?name={name}&email={email}&a1={phoneNumber}" style="min-width:320px;height:630px;"></div>
-<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendly Embed</title>
+    <style>
+        /* Hide the fields in the Calendly widget */
+        input[name="a1"] {
+            display: none !important;
+        }
+        input[name="email"] {
+            display: none !important;
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/daprinceolaolex06/test/?name={name}&email={email}&a1={phoneNumber}" style="min-width:320px;height:630px;"></div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var targetNode = document.querySelector(".calendly-inline-widget");
+            
+            if (targetNode) {
+                var observer = new MutationObserver(function() {
+                    // Apply CSS to hide the fields
+                    var emailField = document.querySelector('input[name="email"]');
+                    var phoneField = document.querySelector('input[name="a1"]');
+                    var nameField = document.querySelector('input[name="name"]');
+                    
+                    if (emailField) emailField.style.display = "none";
+                    if (phoneField) phoneField.style.display = "none";
+                    if (nameField) nameField.style.display = "none";
+                });
 
-<style>
-    /* Hide the phone number field */
-    input[name="a1"] {
-        display: none !important;
-    }
-
-    /* Hide the email field */
-    input[name="email"] {
-        display: none !important;
-    }
-
-    /* Hide the name field */
-    input[name="name"] {
-        display: none !important;
-    }
-</style>
+                observer.observe(targetNode, { childList: true, subtree: true });
+            }
+        });
+    </script>
+</body>
+</html>
