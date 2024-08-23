@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule with Olaolex</title>
     <style>
-        /* Optional: Add your custom styles here */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -24,26 +23,29 @@
     <div class="calendly-inline-widget" id="calendlyWidget" style="min-width:320px;height:630px;"></div>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
     <script>
-        // Function to get URL parameters
         function getQueryParam(param) {
             var urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
-        // Hide specific fields in Calendly iframe using CSS injection
+        // Hide specific fields in Calendly iframe using JavaScript
         function hideCalendlyFields(iframe) {
-            var css = `
-                .i167bxqy.i1uya22c {
-                    display: none !important;
+            try {
+                // Attempt to hide the fields after iframe content loads
+                var input1 = iframe.contentDocument.querySelector('input[name="question_0"]');
+                if (input1) {
+                    input1.style.display = 'none';
                 }
-            `;
-            var style = document.createElement('style');
-            style.type = 'text/css';
-            style.appendChild(document.createTextNode(css));
-            iframe.contentWindow.document.head.appendChild(style);
+
+                var input2 = iframe.contentDocument.querySelector('input[name="question_1"]');
+                if (input2) {
+                    input2.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error hiding fields:', error);
+            }
         }
 
-        // Autofill name, email, a1, and a2 in Calendly
         window.addEventListener('DOMContentLoaded', function() {
             var name = getQueryParam('name');
             var email = getQueryParam('email');
@@ -76,7 +78,9 @@
             // Hide the a1 and a2 fields after the iframe is loaded
             var iframe = document.querySelector('.calendly-inline-widget iframe');
             iframe.onload = function() {
-                hideCalendlyFields(iframe);
+                setTimeout(function() {
+                    hideCalendlyFields(iframe);
+                }, 1000); // Delay to ensure iframe content is fully loaded
             };
         });
     </script>
