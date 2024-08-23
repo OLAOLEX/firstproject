@@ -30,14 +30,28 @@
             return urlParams.get(param);
         }
 
-        // Autofill name and email in Calendly
+        // Hide specific element in Calendly iframe
+        function hideCalendlyElement() {
+            var iframe = document.querySelector('.calendly-inline-widget iframe');
+            var hiddenClass = 'Ca8ZXPhzUYH7_QjqmRim ZailmwkOvrZPJqhYNv2b';
+            iframe.onload = function() {
+                var elementToHide = iframe.contentWindow.document.querySelector(`.${hiddenClass}`);
+                if (elementToHide) {
+                    elementToHide.style.display = 'none';
+                }
+            };
+        }
+
+        // Autofill name, email, a1, and a2 in Calendly
         window.addEventListener('DOMContentLoaded', function() {
             var name = getQueryParam('name');
             var email = getQueryParam('email');
+            var a1 = getQueryParam('a1');
+            var a2 = getQueryParam('a2');
             var calendlyUrl = "https://calendly.com/daprinceolaolex06/test";
 
-            if (name || email) {
-                calendlyUrl += `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`;
+            if (name || email || a1 || a2) {
+                calendlyUrl += `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&a1=${encodeURIComponent(a1)}&a2=${encodeURIComponent(a2)}`;
             }
 
             var widgetDiv = document.getElementById('calendlyWidget');
@@ -49,10 +63,16 @@
                 parentElement: widgetDiv,
                 prefill: {
                     name: name,
-                    email: email
+                    email: email,
+                    customAnswers: {
+                        a1: a1,
+                        a2: a2
+                    }
                 },
                 utm: {}
             });
+
+            hideCalendlyElement(); // Hide the unwanted element
         });
     </script>
     <!-- Calendly inline widget end -->
