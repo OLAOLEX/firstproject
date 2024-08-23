@@ -21,20 +21,38 @@
 <body>
 
     <!-- Calendly inline widget begin -->
-    <div class="calendly-inline-widget" data-url="https://calendly.com/daprinceolaolex06/test?a1=hiddenValue1&a2=hiddenValue2" style="min-width:320px;height:630px;"></div>
+    <div class="calendly-inline-widget" id="calendlyWidget" style="min-width:320px;height:630px;"></div>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
     <script>
+        // Function to get URL parameters
+        function getQueryParam(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Autofill name and email in Calendly
         window.addEventListener('DOMContentLoaded', function() {
-            var iframe = document.querySelector('.calendly-inline-widget iframe');
-            iframe.onload = function() {
-                var hiddenFields = ['a1', 'a2'];
-                hiddenFields.forEach(function(field) {
-                    var input = iframe.contentWindow.document.querySelector(`input[name="${field}"]`);
-                    if (input) {
-                        input.style.display = 'none';
-                    }
-                });
-            };
+            var name = getQueryParam('name');
+            var email = getQueryParam('email');
+            var calendlyUrl = "https://calendly.com/daprinceolaolex06/test";
+
+            if (name || email) {
+                calendlyUrl += `?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`;
+            }
+
+            var widgetDiv = document.getElementById('calendlyWidget');
+            widgetDiv.setAttribute('data-url', calendlyUrl);
+
+            // Load Calendly widget
+            Calendly.initInlineWidget({
+                url: calendlyUrl,
+                parentElement: widgetDiv,
+                prefill: {
+                    name: name,
+                    email: email
+                },
+                utm: {}
+            });
         });
     </script>
     <!-- Calendly inline widget end -->
