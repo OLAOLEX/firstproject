@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Filler</title>
+    <title>Fillable PDF Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf_viewer.css" />
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        .container {
-            max-width: 600px;
-            margin: auto;
-        }
-        textarea {
+        #pdf-viewer {
+            border: 1px solid #ccc;
             width: 100%;
-            height: 150px;
+            height: 600px;
+            overflow: auto;
         }
         button {
             margin-top: 10px;
@@ -23,32 +22,39 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Fill Out the Form</h1>
-        <a href="https://github.com/OLAOLEX/firstproject/raw/759e794548b01e2949532448ce1b6a0cd5d91779/Verzameldocument%20(select)%20(1)%20(1)%20(1).pdf
-" target="_blank">Download PDF</a>
-        <h3>Fill in the information below:</h3>
-        <textarea id="userInput" placeholder="Type your responses here..."></textarea>
-        <button onclick="saveProgress()">Save Progress</button>
-        <button onclick="loadProgress()">Load Progress</button>
-    </div>
+    <h1>Fill Out the PDF Form</h1>
+    <iframe id="pdf-viewer" src="https://drive.google.com/file/d/1pnzyYl8wIOX3pkN8ok_BTOmHe83yJCdo/view"></iframe>
+    <button id="saveProgressBtn">Save Progress</button>
+    <button id="loadProgressBtn">Load Progress</button>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.js"></script>
     <script>
+        const saveProgressBtn = document.getElementById("saveProgressBtn");
+        const loadProgressBtn = document.getElementById("loadProgressBtn");
+        const pdfViewer = document.getElementById("pdf-viewer");
+
+        // Function to save the progress
         function saveProgress() {
-            const userInput = document.getElementById("userInput").value;
-            localStorage.setItem("savedInput", userInput);
+            const userInput = pdfViewer.contentDocument.body.innerHTML;
+            localStorage.setItem("savedPDFInput", userInput);
             alert("Progress saved!");
         }
 
+        // Function to load the progress
         function loadProgress() {
-            const savedInput = localStorage.getItem("savedInput");
+            const savedInput = localStorage.getItem("savedPDFInput");
             if (savedInput) {
-                document.getElementById("userInput").value = savedInput;
+                // Replace the existing content of the PDF with saved input
+                pdfViewer.contentDocument.body.innerHTML = savedInput;
                 alert("Progress loaded!");
             } else {
                 alert("No saved progress found.");
             }
         }
+
+        // Set up event listeners for the buttons
+        saveProgressBtn.addEventListener("click", saveProgress);
+        loadProgressBtn.addEventListener("click", loadProgress);
     </script>
 </body>
 </html>
