@@ -3,58 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fillable PDF Form</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf_viewer.css" />
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        #pdf-viewer {
-            border: 1px solid #ccc;
-            width: 100%;
-            height: 600px;
-            overflow: auto;
-        }
-        button {
-            margin-top: 10px;
-        }
-    </style>
+    <title>Survey Autofill Redirect</title>
 </head>
 <body>
-    <h1>Fill Out the PDF Form</h1>
-    <iframe id="pdf-viewer" src="https://drive.google.com/file/d/1pnzyYl8wIOX3pkN8ok_BTOmHe83yJCdo/view"></iframe>
-    <button id="saveProgressBtn">Save Progress</button>
-    <button id="loadProgressBtn">Load Progress</button>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.js"></script>
+    <h1>Redirecting to Pre-Filled Survey...</h1>
     <script>
-        const saveProgressBtn = document.getElementById("saveProgressBtn");
-        const loadProgressBtn = document.getElementById("loadProgressBtn");
-        const pdfViewer = document.getElementById("pdf-viewer");
+        // Define the pre-filled answers (replace with your u_id and values)
+        const answers = {
+            u_141381615: "753049617",  // Example answer for Question 1
+            u_141381616: "753049619",  // Example answer for Question 2
+            u_141381608: "753049626",  // Example answer for Question 3
+            u_141381619: "753049633",  // Example answer for Question 4
+            u_141381620: "753049642",  // Example answer for Question 5
+            u_141381621: "753049646",  // Example answer for Question 6
+            u_141381622: "753049650",  // Example answer for Question 7
+            u_141381623: "753049654",  // Example answer for Question 8
+            u_141381624: "753049657",  // Example answer for Question 9
+            u_141729856: "755020114",  // Example answer for Question 10
+            u_141381626: "753049663",  // Example answer for Question 11
+            u_141381627: "753049666",  // Example answer for Question 12
+            u_141744508: "755084912"   // Example answer for Question 13
+        };
 
-        // Function to save the progress
-        function saveProgress() {
-            const userInput = pdfViewer.contentDocument.body.innerHTML;
-            localStorage.setItem("savedPDFInput", userInput);
-            alert("Progress saved!");
-        }
+        // Base URL for the QuestionPro survey
+        const surveyUrl = "https://tsinghua.questionpro.com/t/AaSdEZ4DA7";
 
-        // Function to load the progress
-        function loadProgress() {
-            const savedInput = localStorage.getItem("savedPDFInput");
-            if (savedInput) {
-                // Replace the existing content of the PDF with saved input
-                pdfViewer.contentDocument.body.innerHTML = savedInput;
-                alert("Progress loaded!");
-            } else {
-                alert("No saved progress found.");
-            }
-        }
+        // Build the URL with the pre-filled parameters
+        let queryString = Object.keys(answers).map(key => `${key}=${answers[key]}`).join('&');
+        let fullUrl = `${surveyUrl}?${queryString}`;
 
-        // Set up event listeners for the buttons
-        saveProgressBtn.addEventListener("click", saveProgress);
-        loadProgressBtn.addEventListener("click", loadProgress);
+        // Redirect to the pre-filled survey link
+        window.location.href = fullUrl;
     </script>
 </body>
 </html>
