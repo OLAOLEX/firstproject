@@ -1,3 +1,34 @@
-<a href="https://www.usatodaynetworkservice.com/tangstatic/html/nhen/sf-q1a2z330306dc3.min.html" target="_blank">
-  Vote in the poll here
-</a>
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      function redirectToForm() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            
+            // Replace with your actual Google Form URL
+            var googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSfmvlC9fMC0Xsd1sV6HsWrwH9wxFT7WVu04bDH0rlz-TCAwtA/viewform?usp=pp_url";
+            
+            // Entry IDs from your form
+            var nameFieldEntry = "entry.1486487809";  // Employee Name
+            var timeFieldEntry = "entry.1554157294";  // Clock-in/Clock-out Time
+            var gpsFieldEntry = "entry.1534646159";   // GPS Location
+            
+            // Construct final URL with GPS data
+            var finalURL = googleFormURL + "&" + gpsFieldEntry + "=" + lat + "," + lon;
+            
+            // Redirect to Google Form with GPS auto-filled
+            window.location.href = finalURL;
+          });
+        } else {
+          alert("GPS is not enabled. Please enable location and refresh.");
+        }
+      }
+    </script>
+  </head>
+  <body onload="redirectToForm()">
+    <p>Getting your location...</p>
+  </body>
+</html>
