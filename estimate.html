@@ -21,7 +21,7 @@
       document.getElementById('loading').textContent = 'Error: No job number provided in the URL.';
     } else {
       // Replace with your actual backend endpoint URL
-      const apiEndpoint = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?job=' + encodeURIComponent(jobNumber);
+      const apiEndpoint = 'https://script.google.com/macros/s/AKfycbySjKwH67XErzJVLsiEP5UwP3a1K2iGkvHkftc5CZ3BLAVjrRdkdBERJd7566RdYMo6dQ/exec=' + encodeURIComponent(jobNumber);
       
       fetch(apiEndpoint)
         .then(response => response.json())
