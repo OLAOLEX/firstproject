@@ -14,14 +14,14 @@
   <div id="loading" class="loading">Processing your submission... Please wait.</div>
   <div id="summary"></div>
   <script>
-    // Read the job number from the URL query string
+    // Extract the job number from the URL query string, e.g., ?job=JOB-10082
     const params = new URLSearchParams(window.location.search);
     const jobNumber = params.get('job');
     if (!jobNumber) {
       document.getElementById('loading').textContent = 'Error: No job number provided in the URL.';
     } else {
-      // Replace with your actual backend endpoint URL
-      const apiEndpoint = 'https://script.google.com/macros/s/AKfycbySjKwH67XErzJVLsiEP5UwP3a1K2iGkvHkftc5CZ3BLAVjrRdkdBERJd7566RdYMo6dQ/exec=' + encodeURIComponent(jobNumber);
+      // Replace with your deployed Apps Script web app URL
+      const apiEndpoint = 'https://script.google.com/macros/s/AKfycbzgjFc6LCAr59pUZjp--fFVIizDc603AsmorXgazkiIPxhCQcJmhMLn7WDHE92py54zSA/exec?job=' + encodeURIComponent(jobNumber);
       
       fetch(apiEndpoint)
         .then(response => response.json())
